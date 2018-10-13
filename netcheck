@@ -14,9 +14,6 @@ if [ $EUID -ne 0 ]; then
 fi
 ## Then we check on which distro we are ! 
 
-if [ $release = Debian ] || [$release = Fedora ];
-	then echo "c'est une $release"
-fi
 #Second : The Variables
 
 ippub=`curl -s ifconfig.ovh`
