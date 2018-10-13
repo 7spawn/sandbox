@@ -28,12 +28,24 @@ netadp=`ip -o -4 a | awk '{print $2}' | tr -d lo  | sed /^$/d | sort -u`
 release=`lsb_release -i | awk '{print $3}'`
 version=`lsb_release -r | awk '{print $2}'`
 
-#Check if ethtool is installed
-
-debethtool=`dpkg -l | grep 'ethtool' | grep ii > /dev/null`
-fedethtool=`dnf list | grep 'ethtool.x86_64'`
 
 #Third : Scipt Beginning
+
+#Check if ethtool is installed
+case $release in
+		"Debian")
+				debethtool="dpkg -l | grep 'ethtool' | grep ii"
+				if [ -z "$debethtool" ] ; then echo -e "\nPackage 'ethtool' is not installed, please install it to continue"; exit 1 ; fi
+				;;
+		"Fedora")
+				fedethtool=`dnf list --installed | grep 'ethtool.x86_64'`
+				if [ -z "$fedethtool" ] ; then echo -e "\nPackage 'ethtool' is not installed, please install it to continue"; exit 1 ;fi
+				;;
+		*)
+				echo "Distro not supported by this script"
+				exit 1
+				;;
+esac
 
 timeout 2s echo -e "Public IP: $ippub"
 echo -e "IP on $eth4"
@@ -43,17 +55,6 @@ echo -e "\nGathering the NIC(s) informations.."
 echo ""
 echo $netadp
 
-case $release in
-		"Debian")
-				$debethtool > /dev/null
-				;;
-		"Fedora")
-				$fedethtool > /dev/null
-				;;
-		*)
-				echo "Distro not supported by this script"
-				;;
-esac
 #if [ -z "$cethtool" ]
 #then
 #	echo -e "\npackage 'ethtool' is not installed, please intall it to continue" 
