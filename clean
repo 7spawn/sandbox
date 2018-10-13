@@ -1,0 +1,41 @@
+#!/bin/bash
+#Author spawN
+#spawn@namek.fr
+#Creation 20.01.18
+
+#Cleaning the deleted packages from your installation
+
+
+#First : Make sure only root can run this script
+
+if [ $EUID -ne 0 ]; then
+        echo "This script must be run as root!"
+        exit 126
+fi
+
+#Second : Begin of the script
+
+res=`dpkg -l | grep -v ii | awk '{print $2}'| sed '1,5d'`
+rescount=`echo -e "\v$res" | wc -l`
+if [ -z "$res" ]
+        then
+echo "No Packages to Remove"
+        else
+echo "Numbers of Package to Remove : $rescount"
+       while read -s -r -n 1 -p 'List (1) / Delete (2) / Quit (3) :' todo
+                do
+		case $todo in
+                        1) echo -e "\n$res"
+			continue
+			;;
+                        2) echo -e "\nRemoving has begun"
+                                echo -e "$res" | while read line;do apt-get purge -y $line;done
+			break
+                        ;;
+                        3) echo "Exiting"
+			break
+                        ;;
+                esac
+done
+fi
+
