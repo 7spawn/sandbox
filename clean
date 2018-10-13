@@ -13,7 +13,7 @@ if [ $EUID -ne 0 ]; then
         exit 126
 fi
 
-#Second : Begin of the script
+#Second : the script
 
 res=`dpkg -l | grep -v ii | awk '{print $2}'| sed '1,5d'`
 rescount=`echo -e "\v$res" | wc -l`

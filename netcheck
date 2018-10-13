@@ -12,13 +12,18 @@ if [ $EUID -ne 0 ]; then
         echo "This script must be run as root!"
         exit 126
 fi
+## Then we check on which distro we are ! 
 
+if [ $release = Debian ] || [$release = Fedora ];
+	then echo "c'est une $release"
+fi
 #Second : The Variables
 
 ippub=`curl -s ifconfig.ovh`
 eth4=`ip -o -4 a | awk '{print $2}' | tr -d lo  | sed /^$/d | while read eth; do ip -o -4 a show $eth;done | awk '{print $2,$4}' | sort -u`
 eth6=`ip -o -6 a | awk '{print $2}' | tr -d lo  | sed /^$/d | while read eth; do ip -o -6 a show $eth;done | awk '{print $2,$4}' | sort -u`
 netadp=`ip -o -4 a | awk '{print $2}' | tr -d lo  | sed /^$/d | sort -u`
+release=`lsb_release -i | awk '{print $3}'`
 
 #Check if ethtool is installed
 
