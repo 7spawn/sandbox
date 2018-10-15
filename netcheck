@@ -13,11 +13,6 @@ if [ $EUID -ne 0 ]; then
         exit 126
 fi
 
-if [ "$release" = "Debian" ];
-	then echo "We are on a $release $version "
-elif [ "$release" = "Fedora" ]
-	then echo "We are on a $release $version"
-fi
 
 #Second : The Variables
 
@@ -32,6 +27,14 @@ version=`lsb_release -r | awk '{print $2}'`
 #Third : Scipt Beginning
 
 #Check if ethtool is installed
+
+if [ "$release" = "Debian" ];
+	then echo "##### We are on a $release $version #####"
+elif [ "$release" = "Fedora" ]
+	then echo "##### We are on a $release $version #####"
+echo ""
+fi
+
 case $release in
 		"Debian")
 				debethtool="dpkg -l | grep 'ethtool' | grep ii"
@@ -47,13 +50,20 @@ case $release in
 				;;
 esac
 
+echo ""
+
 timeout 2s echo -e "Public IP: $ippub"
+
+echo ""
+
 echo -e "IP on $eth4"
 echo -e "IP on $eth6"
 
+echo ""
+
 echo -e "\nGathering the NIC(s) informations.."
 echo ""
-echo $netadp
+echo -e "Interfaces $netadp"
 
 for nic in $netadp
 	do
