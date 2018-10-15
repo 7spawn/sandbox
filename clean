@@ -1,10 +1,6 @@
 #!/bin/bash
-#Author spawN
-#spawn@namek.fr
-#Creation 20.01.18
 
 #Cleaning the deleted packages from your installation
-
 
 #First : Make sure only root can run this script
 
