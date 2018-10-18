@@ -51,8 +51,6 @@ if [ "$release" = "Debian" ];
 	then echo "##### We are on a $release $version #####"
 elif [ "$release" = "Fedora" ];
 	then echo "##### We are on a $release $version #####"
-elif [ "$release" = "CentOS" ];
-	then echo "##### We are on a $release $version #####"
 elif [ "$release" = "Ubuntu" ];
 	then echo "##### We are on a $release $version #####"
 elif [ "$release" = "127" ];
