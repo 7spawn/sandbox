@@ -16,8 +16,8 @@ ippub=$(curl -s ifconfig.ovh)
 eth4=$(ip -o -4 a | awk '{print $2}' | sed -e "1d"  | sed /^$/d | while read eth; do ip -o -4 a show $eth;done | awk '{print $2,$4}' | sort -u)
 eth6=$(ip -o -6 a | awk '{print $2}' | sed -e "1d"  | sed /^$/d | while read eth; do ip -o -6 a show $eth;done | awk '{print $2,$4}' | sort -u)
 netadp=$(ip -o -4 a | awk '{print $2}' | sed -e "1d"  | sed /^$/d | sort -u)
-release=$(lsb_release -i | awk '{print $3}')
-version=$(lsb_release -r | awk '{print $2}')
+release=$(lsb_release -i 2>/dev/null | awk '{print $3}')
+version=$(lsb_release -r 2>/dev/null | awk '{print $2}')
 
 #Third : Scipt Beginning
 
@@ -31,10 +31,6 @@ case $release in
 		"Fedora")
 				fedethtool=`dnf list --installed | grep 'ethtool.x86_64'`
 				if [ -z "$fedethtool" ] ; then echo -e "\nPackage 'ethtool' is not installed, please install it to continue"; exit 1 ;fi
-				;;
-		"CentOS")
-				cenethtool=`yum list installed | grep 'ethtool.x86_64'`
-				if [ -z "$cenethtool" ] ; then echo -e "\nPackage 'ethtool' is not installed, please install it to continue"; exit 1 ;fi
 				;;
 		"Ubuntu")
 				ubunethtool=`dpkg -l | grep 'ethtool' | grep ii`
