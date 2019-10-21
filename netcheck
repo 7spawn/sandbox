@@ -36,6 +36,10 @@ case $release in
 				ubunethtool=`dpkg -l | grep 'ethtool' | grep ii`
 				if [ -z "$ubunethtool" ] ; then echo -e "\nPackage 'ethtool' is not installed, please install it to continue"; exit 1 ;fi
 				;;
+		"Raspbian")
+				raspethtool=`dpkg -l | grep 'ethtool' | grep ii`
+				if [ -z "$raspethtool" ] ; then echo -e "\nPackage 'ethtool' is not installed, please install it to continue"; exit 1 ;fi
+				;;
 		*)
 				echo "Distro not supported by this script"
 				exit 1
@@ -43,20 +47,10 @@ case $release in
 esac
 
 #A bit of clean up
-clear
+#clear
 
 echo ""
-
-if [ "$release" = "Debian" ];
-	then echo "##### We are on a $release $version #####"
-elif [ "$release" = "Fedora" ];
-	then echo "##### We are on a $release $version #####"
-elif [ "$release" = "Ubuntu" ];
-	then echo "##### We are on a $release $version #####"
-elif [ "$release" = "127" ];
-	then echo "##### Cannot identify the distro -- Please try to install lsb_release package -- The only supported Distro are : Debian/Ubuntu & Fedora #####"
-fi
-
+echo "##### We are on a $release $version #####"
 echo ""
 
 timeout 2s echo -e "Public IP: $ippub"
