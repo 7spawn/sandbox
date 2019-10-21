@@ -54,7 +54,7 @@ elif [ "$release" = "Fedora" ];
 elif [ "$release" = "Ubuntu" ];
 	then echo "##### We are on a $release $version #####"
 elif [ "$release" = "127" ];
-	then echo "##### Cannot identify the distro -- Please try to install lsb_release package #####"
+	then echo "##### Cannot identify the distro -- Please try to install lsb_release package -- The only supported Distro are : Debian/Ubuntu & Fedora #####"
 fi
 
 echo ""
