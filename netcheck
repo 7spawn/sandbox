@@ -18,7 +18,7 @@ eth6=$(ip -o -6 a | awk '{print $2}' | sed -e "1d"  | sed /^$/d | while read eth
 netadp=$(ip -o -4 a | awk '{print $2}' | sed -e "1d"  | sed /^$/d | sort -u)
 release=$(lsb_release -i 2>/dev/null | awk '{print $3}')
 version=$(lsb_release -r 2>/dev/null | awk '{print $2}')
-lsb_installed=$(dpkg -l | grep 'lsb_release')
+lsb_installed=$(dpkg -l lsb-release| grep 'ii')
 
 #Third : Scipt Beginning
 
@@ -33,7 +33,7 @@ fi
 #Check if ethtool is installed
 
 case $release in
-		"Debian|Ubuntu|Raspbian")
+		"Debian"|"Ubuntu"|"Raspbian")
 				debethtool=`dpkg -l | grep 'ethtool' | grep ii`
 				if [ -z "$debethtool" ] ; then echo -e "\nPackage 'ethtool' is not installed, please install it to continue"; exit 1 ; fi
 				;;
